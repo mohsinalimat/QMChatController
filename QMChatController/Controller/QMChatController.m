@@ -66,6 +66,9 @@ QMChatCollectionViewLayoutDelegate
         
         // items setup
         //        _items = [[NSMutableArray alloc] init];
+        
+        // test
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(_scrollToBottom)];
     }
     
     return self;
@@ -85,6 +88,12 @@ QMChatCollectionViewLayoutDelegate
     }
     
     return [messageItems mutableCopy];
+}
+
+- (void)_scrollToBottom {
+    
+    CGPoint bottomOffset = CGPointMake(0, _collectionNode.view.contentSize.height - _collectionNode.view.bounds.size.height);
+    [_collectionNode.view setContentOffset:bottomOffset animated:NO];
 }
 
 #pragma mark - Life cycle
@@ -145,6 +154,18 @@ QMChatCollectionViewLayoutDelegate
 - (NSArray *)items {
     
     return [_items copy];
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(QMChatCollectionViewLayout *)layout originalItemSizeAtIndexPath:(NSIndexPath *)indexPath {
+    
+    if (indexPath.item >= (NSInteger)_items.count) {
+        
+        return CGSizeZero;
+    }
+    
+    QMMessageItem *messageItem = _items[indexPath.item];
+    
+    return [messageItem sizeForContainerSize:CGSizeMake(CGRectGetWidth(collectionView.bounds) * 0.8, CGFLOAT_MAX)];
 }
 
 @end

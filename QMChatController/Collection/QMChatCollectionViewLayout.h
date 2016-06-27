@@ -8,6 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
+@interface QMChatDecorationViewAttributes : NSObject
+
+@property (assign, nonatomic) NSInteger index;
+@property (assign, nonatomic) CGRect frame;
+
++ (instancetype)decorationAttributeForIndex:(NSInteger)index withFrame:(CGRect)frame;
+
+@end
+
 @interface QMChatCollectionViewLayout : UICollectionViewLayout
 
 @end
@@ -19,5 +28,9 @@
 @protocol QMChatCollectionViewLayoutDelegate <NSObject>
 
 - (NSArray *)items;
+
+- (CGSize)collectionView:(UICollectionView *)collectionView
+                  layout:(QMChatCollectionViewLayout *)layout
+originalItemSizeAtIndexPath:(NSIndexPath *)indexPath;
 
 @end
