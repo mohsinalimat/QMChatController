@@ -29,7 +29,7 @@
     if (self != nil) {
         
         // temp color
-        self.backgroundColor = [UIColor greenColor];
+        self.backgroundColor = [UIColor whiteColor];
         
         if (title.length > 0) {
             
@@ -59,43 +59,58 @@
 
 #pragma mark - Layout
 
-- (ASLayoutSpec *)layoutSpecThatFits:(ASSizeRange)__unused constrainedSize {
+- (ASLayoutSpec *)layoutSpecThatFits:(ASSizeRange)constrainedSize {
     
-    ASStackLayoutSpec *mainStack = [ASStackLayoutSpec
-                                    stackLayoutSpecWithDirection:ASStackLayoutDirectionHorizontal
-                                    spacing:6.0
-                                    justifyContent:ASStackLayoutJustifyContentStart
-                                    alignItems:ASStackLayoutAlignItemsEnd
-                                    children:@[_textNode, _timeNode]];
+    [_titleNode measure:constrainedSize.max];
+    [_textNode measure:constrainedSize.max];
+    [_timeNode measure:constrainedSize.max];
     
-    // set sizeRange to make max width fixed
-    //    ASRelativeSize min = ASRelativeSizeMake(ASRelativeDimensionMakeWithPoints(0.0f), ASRelativeDimensionMakeWithPoints(0.0f));
-    //    ASRelativeSize max = ASRelativeSizeMake(ASRelativeDimensionMakeWithPoints(200.0f), ASRelativeDimensionMakeWithPoints(CGFLOAT_MAX));
-    //    mainStack.sizeRange = ASRelativeSizeRangeMake(min,max);
-    
-    ASStaticLayoutSpec *staticSpec = [ASStaticLayoutSpec staticLayoutSpecWithChildren:@[mainStack]];
-    
-    ASInsetLayoutSpec *insetSpec = nil;
+    id<ASLayoutable> topRule = nil;
     
     if (_titleNode != nil) {
         
-        ASStackLayoutSpec *vStack = [ASStackLayoutSpec
-                                     stackLayoutSpecWithDirection:ASStackLayoutDirectionVertical
-                                     spacing:2.5f
-                                     justifyContent:ASStackLayoutJustifyContentStart
-                                     alignItems:ASStackLayoutAlignItemsStart
-                                     children:@[_titleNode, staticSpec]];
-        
-        insetSpec = [ASInsetLayoutSpec
-                     insetLayoutSpecWithInsets:UIEdgeInsetsMake(2.0f, 4.0f, 2.0f, 4.0f)
-                     child:vStack];
+        topRule = [ASStackLayoutSpec
+                   stackLayoutSpecWithDirection:ASStackLayoutDirectionVertical
+                   spacing:2.5f
+                   justifyContent:ASStackLayoutJustifyContentStart
+                   alignItems:ASStackLayoutAlignItemsStart
+                   children:@[_titleNode, _textNode]];
     }
     else {
         
-        insetSpec = [ASInsetLayoutSpec
-                     insetLayoutSpecWithInsets:UIEdgeInsetsMake(2.0f, 4.0f, 2.0f, 4.0f)
-                     child:staticSpec];
+        topRule = _textNode;
     }
+    
+    ASLayoutSpec *finalSpec = nil;
+    
+    BOOL shouldStay = _titleNode != nil && (_titleNode.calculatedSize.width > _textNode.calculatedSize.width + _timeNode.calculatedSize.width);
+    
+    if (_textNode.lineCount > 1
+        || shouldStay) {
+        
+        ASRelativeLayoutSpec *relativeSpec = [ASRelativeLayoutSpec
+                                              relativePositionLayoutSpecWithHorizontalPosition:ASRelativeLayoutSpecPositionEnd
+                                              verticalPosition:ASRelativeLayoutSpecPositionEnd
+                                              sizingOption:ASRelativeLayoutSpecSizingOptionDefault
+                                              child:_timeNode];
+        
+        finalSpec = [ASOverlayLayoutSpec overlayLayoutSpecWithChild:topRule overlay:relativeSpec];
+    }
+    else {
+        
+        ASStackLayoutSpec *stackSpec = [ASStackLayoutSpec
+                                        stackLayoutSpecWithDirection:ASStackLayoutDirectionHorizontal
+                                        spacing:5.0f
+                                        justifyContent:ASStackLayoutJustifyContentEnd
+                                        alignItems:ASStackLayoutAlignItemsEnd
+                                        children:@[topRule, _timeNode]];
+        
+        finalSpec = stackSpec;
+    }
+    
+    ASInsetLayoutSpec *insetSpec = [ASInsetLayoutSpec
+                                    insetLayoutSpecWithInsets:UIEdgeInsetsMake(2.0f, 4.0f, 2.0f, 4.0f)
+                                    child:finalSpec];
     
     return insetSpec;
 }

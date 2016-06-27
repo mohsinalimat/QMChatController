@@ -78,7 +78,7 @@ CGFloat textFontSize() {
             
             _attributedTitle = [[NSAttributedString alloc]
                                initWithString:title
-                               attributes:@{NSFontAttributeName : QMSystemFontOfSize(textFontSize()),
+                               attributes:@{NSFontAttributeName : QMSystemFontOfSize(14.0f),
                                             NSForegroundColorAttributeName : [QMChatColors summerSkyColor]}];
         }
         
@@ -99,7 +99,7 @@ CGFloat textFontSize() {
             _attributedTime = [[NSAttributedString alloc]
                                initWithString:time
                                attributes:@{NSFontAttributeName : QMSystemFontOfSize(11.0f),
-                                            NSForegroundColorAttributeName : [UIColor lightGrayColor]}];
+                                            NSForegroundColorAttributeName : [UIColor grayColor]}];
         }
     }
     

@@ -11,5 +11,6 @@
 @interface TMessagesFactory : NSObject
 
 + (NSArray <QBChatMessage *> *)messagesOfAmount:(NSUInteger)amount;
++ (NSArray <QBChatMessage *> *)messagesOfAmount:(NSUInteger)amount randomizedString:(BOOL)flag;
 
 @end

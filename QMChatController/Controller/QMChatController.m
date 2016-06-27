@@ -51,6 +51,9 @@ QMChatCollectionViewLayoutDelegate
     _collectionLayout = [[QMChatCollectionViewLayout alloc] init];
     _collectionNode = [[ASCollectionNode alloc] initWithCollectionViewLayout:_collectionLayout];
     
+    //temp color
+    _collectionNode.backgroundColor = [UIColor colorWithRed:237.0f/255.0f green:230.0f/255.0f blue:211.0f/255.0f alpha:1.0f];
+    
     self = [super initWithNode:_collectionNode];
     if (self != nil) {
         
