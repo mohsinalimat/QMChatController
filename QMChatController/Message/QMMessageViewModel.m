@@ -61,9 +61,6 @@ CGFloat textFontSize() {
 }
 
 @interface QMMessageViewModel ()
-{
-    QBChatMessage *_message;
-}
 
 @end
 

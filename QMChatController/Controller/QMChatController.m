@@ -11,20 +11,22 @@
 // tests
 #import "TMessagesFactory.h"
 
-// viewmodel
-#import "QMMessageViewModel.h"
-
-// view
+// collection
+#import "QMChatCollectionViewLayout.h"
 #import "QMMessageNode.h"
+#import "QMMessageItem.h"
 
 @interface QMChatController ()
 <
 ASCollectionDelegate,
-ASCollectionDataSource
+ASCollectionDataSource,
+QMChatCollectionViewLayoutDelegate
 >
 {
     // collection
     ASCollectionNode *_collectionNode;
+    QMChatCollectionViewLayout *_collectionLayout;
+    QMChatCollectionViewLayoutInspector *_layoutInspector;
     
     // items
     NSMutableArray *_items;
@@ -44,11 +46,10 @@ ASCollectionDataSource
 
 - (instancetype)init {
     
-    _items = [[TMessagesFactory messagesOfAmount:50] mutableCopy]; // testing
+    _items = [self _messageItemsOfAmount:50]; // testing
     
-    UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
-    
-    _collectionNode = [[ASCollectionNode alloc] initWithCollectionViewLayout:flowLayout];
+    _collectionLayout = [[QMChatCollectionViewLayout alloc] init];
+    _collectionNode = [[ASCollectionNode alloc] initWithCollectionViewLayout:_collectionLayout];
     
     self = [super initWithNode:_collectionNode];
     if (self != nil) {
@@ -57,11 +58,30 @@ ASCollectionDataSource
         _collectionNode.dataSource = self;
         _collectionNode.delegate = self;
         
+        _layoutInspector = [[QMChatCollectionViewLayoutInspector alloc] init];
+        _collectionNode.view.layoutInspector = _layoutInspector;
+        
         // items setup
         //        _items = [[NSMutableArray alloc] init];
     }
     
     return self;
+}
+
+#pragma mark - _test
+
+- (NSMutableArray *)_messageItemsOfAmount:(NSUInteger)amount {
+    
+    NSArray *messages = [TMessagesFactory messagesOfAmount:50];
+    
+    NSMutableArray *messageItems = [[NSMutableArray alloc] initWithCapacity:amount];
+    
+    for (QBChatMessage *message in messages) {
+        
+        [messageItems addObject:[[QMMessageItem alloc] initWithMessage:message]];
+    }
+    
+    return [messageItems mutableCopy];
 }
 
 #pragma mark - Life cycle
@@ -103,17 +123,11 @@ ASCollectionDataSource
         
         if (indexPath.section == 0) {
             
-            QBChatMessage *item = indexPath.row < (NSInteger)self->_items.count ? self->_items[indexPath.row] : nil;
+            QMMessageItem *item = indexPath.row < (NSInteger)self->_items.count ? self->_items[indexPath.row] : nil;
             
             if (item != nil) {
                 
-                QMMessageViewModel *viewModel = [[QMMessageViewModel alloc] initWithMessage:item];
-                
-                QMMessageNode *cellNode = [[QMMessageNode alloc] initWithTitle:viewModel.attributedTitle
-                                                                          text:viewModel.attributedText
-                                                                          time:viewModel.attributedTime];
-                
-                return cellNode;
+                return item.messageNode;
             }
         }
         
@@ -123,7 +137,7 @@ ASCollectionDataSource
     };
 }
 
-#pragma mark - UICollectionViewLayoutDelegate
+#pragma mark - QMChatCollectionViewLayoutDelegate
 
 - (NSArray *)items {
     

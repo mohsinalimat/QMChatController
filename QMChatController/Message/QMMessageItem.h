@@ -1,5 +1,5 @@
 //
-//  QMMessageViewModel.h
+//  QMMessageItem.h
 //  QMChatController
 //
 //  Created by Vitaliy Gorbachov on 6/27/16.
@@ -8,17 +8,20 @@
 
 #import <Foundation/Foundation.h>
 
+@class QMMessageViewModel;
+@class QMMessageNode;
+
 NS_ASSUME_NONNULL_BEGIN
 
-@interface QMMessageViewModel : NSObject
+@interface QMMessageItem : NSObject
 
 @property (strong, nonatomic, readonly) QBChatMessage *message;
-
-@property (strong, nonatomic, readonly, nullable) NSAttributedString *attributedTitle;
-@property (strong, nonatomic, readonly, nullable) NSAttributedString *attributedText;
-@property (strong, nonatomic, readonly, nullable) NSAttributedString *attributedTime;
+@property (strong, nonatomic, readonly) QMMessageViewModel *viewModel;
+@property (strong, nonatomic, readonly) QMMessageNode *messageNode;
 
 - (instancetype)initWithMessage:(QBChatMessage *)message;
+
+- (CGSize)sizeForContainerSize:(CGSize)containerSize;
 
 @end
 

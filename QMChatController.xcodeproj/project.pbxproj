@@ -21,6 +21,8 @@
 		5819B1051D213A3F00BF6DEF /* QMChatHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 5819B1041D213A3F00BF6DEF /* QMChatHelpers.m */; };
 		5819B10C1D2142E600BF6DEF /* QMChatDateUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 5819B10B1D2142E600BF6DEF /* QMChatDateUtils.m */; };
 		5819B10F1D214F8C00BF6DEF /* QMChatColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 5819B10E1D214F8C00BF6DEF /* QMChatColors.m */; };
+		5819B1121D2153EE00BF6DEF /* QMChatCollectionViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 5819B1111D2153EE00BF6DEF /* QMChatCollectionViewLayout.m */; };
+		5819B1151D2156A000BF6DEF /* QMMessageItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 5819B1141D2156A000BF6DEF /* QMMessageItem.m */; };
 		93A22513CE84FC80A29CCC17 /* libPods-QMChatController.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BB5A7DF7E219C5B2785E381 /* libPods-QMChatController.a */; };
 /* End PBXBuildFile section */
 
@@ -73,6 +75,10 @@
 		5819B10B1D2142E600BF6DEF /* QMChatDateUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QMChatDateUtils.m; path = Tools/QMChatDateUtils.m; sourceTree = "<group>"; };
 		5819B10D1D214F8C00BF6DEF /* QMChatColors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QMChatColors.h; path = Tools/QMChatColors.h; sourceTree = "<group>"; };
 		5819B10E1D214F8C00BF6DEF /* QMChatColors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QMChatColors.m; path = Tools/QMChatColors.m; sourceTree = "<group>"; };
+		5819B1101D2153EE00BF6DEF /* QMChatCollectionViewLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QMChatCollectionViewLayout.h; path = Collection/QMChatCollectionViewLayout.h; sourceTree = "<group>"; };
+		5819B1111D2153EE00BF6DEF /* QMChatCollectionViewLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QMChatCollectionViewLayout.m; path = Collection/QMChatCollectionViewLayout.m; sourceTree = "<group>"; };
+		5819B1131D2156A000BF6DEF /* QMMessageItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QMMessageItem.h; path = Message/QMMessageItem.h; sourceTree = "<group>"; };
+		5819B1141D2156A000BF6DEF /* QMMessageItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QMMessageItem.m; path = Message/QMMessageItem.m; sourceTree = "<group>"; };
 		9386B4537B24CC5E9052C025 /* Pods-QMChatController.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QMChatController.release.xcconfig"; path = "Pods/Target Support Files/Pods-QMChatController/Pods-QMChatController.release.xcconfig"; sourceTree = "<group>"; };
 		DF9C48C0C56D12DB93CE8123 /* Pods-QMChatController.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QMChatController.debug.xcconfig"; path = "Pods/Target Support Files/Pods-QMChatController/Pods-QMChatController.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -199,6 +205,8 @@
 		5819B0F71D2137B900BF6DEF /* Collection */ = {
 			isa = PBXGroup;
 			children = (
+				5819B1101D2153EE00BF6DEF /* QMChatCollectionViewLayout.h */,
+				5819B1111D2153EE00BF6DEF /* QMChatCollectionViewLayout.m */,
 				5819B0F81D2137D700BF6DEF /* QMMessageNode.h */,
 				5819B0F91D2137D700BF6DEF /* QMMessageNode.m */,
 			);
@@ -208,6 +216,8 @@
 		5819B0FB1D2139C500BF6DEF /* Message */ = {
 			isa = PBXGroup;
 			children = (
+				5819B1131D2156A000BF6DEF /* QMMessageItem.h */,
+				5819B1141D2156A000BF6DEF /* QMMessageItem.m */,
 				5819B0FC1D2139DC00BF6DEF /* QMMessageViewModel.h */,
 				5819B0FD1D2139DC00BF6DEF /* QMMessageViewModel.m */,
 			);
@@ -426,6 +436,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5819B1151D2156A000BF6DEF /* QMMessageItem.m in Sources */,
 				5819B0FE1D2139DC00BF6DEF /* QMMessageViewModel.m in Sources */,
 				5819B0BE1D211DF900BF6DEF /* AppDelegate.m in Sources */,
 				5819B0F61D21230200BF6DEF /* TMessagesFactory.m in Sources */,
@@ -435,6 +446,7 @@
 				5819B0FA1D2137D700BF6DEF /* QMMessageNode.m in Sources */,
 				5819B10F1D214F8C00BF6DEF /* QMChatColors.m in Sources */,
 				5819B10C1D2142E600BF6DEF /* QMChatDateUtils.m in Sources */,
+				5819B1121D2153EE00BF6DEF /* QMChatCollectionViewLayout.m in Sources */,
 				5819B0BB1D211DF900BF6DEF /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
